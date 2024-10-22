@@ -5,8 +5,6 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Course Details - Mentor Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -15,7 +13,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,28 +22,102 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f0f0f0;
+    }
 
+    .main {
+      background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(40, 128, 214, 1) 20%);
+      padding-bottom: 50px;
+      padding-top: 20px; /* Adjusted padding-top for more spacing */
+      min-height: calc(100vh - 40px); /* Ensures the background covers the page */
+      margin-top: 1cm; /* Position blue background 2cm from the top */
+      color: white;
+    }
+
+    /* Navigation Bar Styling */
+    .navmenu {
+      margin-top: 0.8cm; /* Start from 0.8cm from the top */
+    }
+
+    .navmenu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 30px; /* Spacing of 3 (30px) */
+    }
+
+    .navmenu ul li a {
+      text-decoration: none;
+      color: black;
+      font-size: 18px; /* Unbolded */
+    }
+
+    .block-container {
+      display: none;
+      margin-top: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .block {
+      display: inline-block;
+      margin: 15px; /* Increased margin for spacing */
+      padding: 20px 30px;
+      border-radius: 8px;
+      text-align: center;
+      background-color: black; /* Set block color to black */
+      color: white; /* Set text color inside blocks to white */
+      font-weight: bold;
+      font-size: 24px; /* Increased font size */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .block:hover {
+      transform: scale(1.1);
+    }
+
+    .toggle-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .toggle-buttons button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: rgba(40, 128, 214, 1);
+      color: white;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .toggle-buttons button:hover {
+      background-color: rgba(2, 0, 36, 1);
+    }
+  </style>
 </head>
 
 <body class="course-details-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Student Section</h1>
+        <h1 class="sitename" style="display: none;">Student Section</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html" >Home<br></a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="menu.html" class="active">Menu</a></li>
-          <li><a href="assesment.html">Assesment</a></li>
+          <li><a href="assesment.html">Assessment</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -54,7 +126,6 @@
 
   <main class="main">
 
-    <!-- Page Title -->
     <div class="page-title" data-aos="fade">
       <div class="heading">
         <div class="container">
@@ -65,46 +136,76 @@
           </div>
         </div>
       </div>
-    </div><!-- End Page Title -->
+    </div>
 
-    <!-- Courses Course Details Section -->
     <section id="courses-course-details" class="courses-course-details section">
-
       <div class="container" data-aos="fade-up">
-
-        <div class="row">
-          <div class="col-lg-8">
-            
-          </div>
-          <div class="col-lg-4">
-
-          </div>
+        <div class="toggle-buttons">
+          <button onclick="showBlocks('alphabets')">Alphabets</button>
+          <button onclick="showBlocks('numbers')">Numbers</button>
+          <button onclick="showBlocks('words')">Words</button>
         </div>
 
-      </div>
+        <div id="alphabets" class="block-container">
+          <script>
+            const alphabets = [];
+            for (let i = 65; i <= 90; i++) {
+              alphabets.push(`<div class="block">${String.fromCharCode(i)}</div>`);
+            }
+            document.write(alphabets.join(''));
+          </script>
+        </div>
 
-    </section><!-- /Courses Course Details Section -->
+        <div id="numbers" class="block-container">
+          <script>
+            const numbers = [];
+            for (let i = 0; i <= 9; i++) {
+              numbers.push(`<div class="block">${i}</div>`);
+            }
+            document.write(numbers.join(''));
+          </script>
+        </div>
+
+        <div id="words" class="block-container">
+          <div class="block">Hello</div>
+          <div class="block">World</div>
+          <div class="block">Apple</div>
+          <div class="block">Banana</div>
+          <div class="block">Cat</div>
+          <div class="block">Dog</div>
+        </div>
+      </div>
+    </section>
 
   </main>
 
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
 
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
   <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    function showBlocks(type) {
+      const containers = document.querySelectorAll('.block-container');
+      containers.forEach(container => container.style.display = 'none');
+
+      const selectedContainer = document.getElementById(type);
+      selectedContainer.style.display = 'flex';
+
+      // Set the flex-wrap property to wrap so that it shows 6-7 blocks per line
+      selectedContainer.style.flexWrap = 'wrap';
+      selectedContainer.style.justifyContent = 'center';
+    }
+  </script>
 
 </body>
 
