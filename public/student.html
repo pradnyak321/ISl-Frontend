@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Student</title>
+
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/student.css" rel="stylesheet">
+
+  
+</head>
+
+<body class="course-details-page">
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo">
+        <h1 class="sitename">ISL Mate</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="menu.html" class="active">Menu</a></li>
+          <li><a href="assessment.html">Assessment</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="page-title" data-aos="fade">
+      <div class="container text-center">
+        <h1>Student Section</h1>
+      </div>
+    </div>
+
+    <div class="center-buttons">
+      <button onclick="showAlphabets()">Alphabets</button>
+      <button onclick="showNumbers()">Numbers</button>
+      <button onclick="showWords()">Words</button>
+    </div>
+
+    <div id="response" class="image-display"></div>
+    <br>
+    <div id="display-area" class="grid"></div>
+  </main>
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+
+    const displayArea=document.getElementById("display-area");
+    const responseArea=document.getElementById("response");
+
+    const apiURL="http://localhost:8080/api/signs/alphabet/";
+
+    function clearDisplay() {
+      displayArea.innerHTML = "";
+    }
+
+    function showAlphabets() {
+      clearDisplay();
+      const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      for (let i = 0; i < alphabets.length; i++) {
+        const letter = alphabets[i];
+        const div = document.createElement("div");
+        div.className = "grid-item";
+        div.textContent = letter;
+        div.onclick = () => sendAlphabet(letter);
+        displayArea.appendChild(div);
+      }
+    }
+
+    async function sendAlphabet(letter){
+      const response= await fetch(apiURL+letter);
+      var data=await response.json();
+      
+      console.log(data);
+      
+      const imageURL="http://localhost:8080";
+      
+      responseArea.innerHTML="";
+      
+      const img=document.createElement("img");
+      img.src=imageURL+data.imagePath;
+      img.alt = "Sample Image";
+      img.style.maxWidth = "100%";
+      responseArea.appendChild(img);
+    }
+
+    showAlphabets();
+
+  </script>
+</body>
+</html>
