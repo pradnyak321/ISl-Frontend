@@ -70,7 +70,8 @@
     const displayArea=document.getElementById("display-area");
     const responseArea=document.getElementById("response");
 
-    const apiURL="http://localhost:8080/api/signs/alphabet/";
+    const apiURLAlpha="http://localhost:8080/api/signs/alphabet/";
+    const apiURLNum="http://localhost:8080/api/signs/number/";
 
     function clearDisplay() {
       displayArea.innerHTML = "";
@@ -90,7 +91,7 @@
     }
 
     async function sendAlphabet(letter){
-      const response= await fetch(apiURL+letter);
+      const response= await fetch(apiURLAlpha+letter);
       var data=await response.json();
       
       console.log(data);
@@ -106,7 +107,38 @@
       responseArea.appendChild(img);
     }
 
-    showAlphabets();
+    function showNumbers() {
+      clearDisplay();
+      const numbers = "0123456789";
+      for (let i = 0; i < numbers.length; i++) {
+        const num = numbers[i];
+        const div = document.createElement("div");
+        div.className = "grid-item";
+        div.textContent = num;
+        div.onclick = () => sendNumber(num);
+        displayArea.appendChild(div);
+      }
+    }
+    async function sendNumber(num){
+      const response= await fetch(apiURLNum+num);
+      var data=await response.json();
+      
+      console.log(data);
+      
+      const imageURL="http://localhost:8080";
+      
+      responseArea.innerHTML="";
+      
+      const img=document.createElement("img");
+      img.src=imageURL+data.imagePath;
+      img.alt = "Sample Image";
+      img.style.maxWidth = "100%";
+      responseArea.appendChild(img);
+    }
+
+    
+
+    //showAlphabets();
 
   </script>
 </body>
