@@ -72,6 +72,7 @@
 
     const apiURLAlpha="http://localhost:8080/api/signs/alphabet/";
     const apiURLNum="http://localhost:8080/api/signs/number/";
+    const apiURLWord="http://localhost:8080/api/signs/words/";
 
     function clearDisplay() {
       displayArea.innerHTML = "";
@@ -136,6 +137,40 @@
       responseArea.appendChild(img);
     }
 
+    function showWords() {
+      clearDisplay();
+      const words = ["Uncle", "wash", "water", "week", "Welcome", "What.", "when", "Where", "Who", "Why", "work", "year", "yellow", "Absent", "Achieve", "after", "Alone", "Amount", "Animals", "Apple", "Auanty", "baby", "Bad.", "Bag", "Bathroom", "before", "Big", "Birds", "Black", "blue", "Boy", "brown", "Brush", "cat", "cereals", "cheese", "clean", "clothes", "coat", "coffee", "coins", "cold", "Colours", "comb", "Cookies", "cost", "Cow", "Cry", "cup", "curd", "day", "Divorced", "dog", "dogs", "dollers", "Drink", "eggs", "Exerice", "Family", "Father", "feelings", "finish", "food", "Fool", "Fork", "Good.", "Grand father", "Grand mother", "green", "Happy", "Health", "Hello", "Help", "home", "Horse", "hot", "How", "Hungry", "Less", "like", "Love.", "marriage", "milk", "Money", "month", "More", "Mother", "night", "paisa", "pants", "pizza", "places", "Please", "red", "Request", "rupees", "Sad", "Seperated", "Sheep", "shirt", "shoes", "socks", "sorry", "Spoon", "Stop", "Tall", "Teeth", "Temperature", "Thank you", "today"];
+
+      for (let i = 0; i < words.length; i++) {
+        const input = words[i];
+        const div = document.createElement("div");
+        div.className = "grid-item";
+        div.textContent = input;
+        div.onclick = () => sendWord(input);
+        displayArea.appendChild(div);
+      }
+    }
+
+    async function sendWord(word){
+      const response= await fetch(apiURLWord+word);
+      var data=await response.json();
+      
+      console.log(data);
+      
+      const videoURL="http://localhost:8080";
+      
+      responseArea.innerHTML="";
+      
+      const video=document.createElement("video")
+      video.src=videoURL+data.videoPath;
+      video.alt="Sample Video"
+      video.style.maxWidth="30%";
+      video.controls = true;
+      responseArea.appendChild(video);
+    }
+
+
+    
     
 
     //showAlphabets();
