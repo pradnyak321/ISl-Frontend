@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -16,7 +17,7 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/student.css" rel="stylesheet">
 
-  
+
 </head>
 
 <body class="course-details-page">
@@ -61,7 +62,37 @@
     <div id="display-area" class="grid"></div>
   </main>
 
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Modal Structure
+  <div id="imageModal" class="modal">
+    <div class="modal-content" style="width: 800px; height: 400px;">
+      
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modalImage" src="" alt="Image Display" style="width: 400px; height: 350px;">
+    </div>
+  </div> -->
+  <!-- Modal Structure -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content"
+      style="width: 800px; height: 400px; display: flex; align-items: center; position: relative;">
+      <!-- Close Button -->
+      <span class="close" onclick="closeModal()"
+        style="position: absolute; top: 10px; right: 20px; font-size: 24px; cursor: pointer;">&times;</span>
+
+      <!-- Image Section -->
+      <img id="modalImage" src="" alt="Image Display"
+        style="width: 400px; height: 350px; margin-right: 20px; object-fit: contain;">
+
+      <!-- Text Section -->
+      <div id="modalText" style="flex-grow: 1; font-size: 300px; font-weight: bold; color: #333; text-align: left;">
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
 
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -73,15 +104,16 @@
 
   <script>
 
-    const displayArea=document.getElementById("display-area");
-    const responseArea=document.getElementById("response");
+    const displayArea = document.getElementById("display-area");
+    const responseArea = document.getElementById("response");
 
-    const apiURLAlpha="http://localhost:8080/api/signs/alphabet/";
-    const apiURLNum="http://localhost:8080/api/signs/number/";
-    const apiURLWord="http://localhost:8080/api/signs/words/";
+    const apiURLAlpha = "http://localhost:8080/api/signs/alphabet/";
+    const apiURLNum = "http://localhost:8080/api/signs/number/";
+    const apiURLWord = "http://localhost:8080/api/signs/words/";
 
     function clearDisplay() {
       displayArea.innerHTML = "";
+      responseArea.innerHTML = ""; // Clear the response area
     }
 
     function showAlphabets() {
@@ -97,45 +129,11 @@
       }
     }
 
-    // async function sendAlphabet(letter){
-    //   const response= await fetch(apiURLAlpha+letter);
-    //   var data=await response.json();
-      
-    //   console.log(data);
-      
-    //   const imageURL="http://localhost:8080";
-      
-    //   responseArea.innerHTML="";
-      
-    //   const img=document.createElement("img");
-    //   img.src=imageURL+data.imagePath;
-    //   img.alt = "Sample Image";
-    //   img.style.maxWidth = "100%";
-    //   responseArea.appendChild(img);
-    // }
     async function sendAlphabet(letter) {
-  const response = await fetch(apiURLAlpha + letter);
-  var data = await response.json();
-
-  console.log(data);
-
-  const imageURL = "http://localhost:8080";
-
-  responseArea.innerHTML = "";
-
-  const img = document.createElement("img");
-  img.src = imageURL + data.imagePath;
-  img.alt = "Sample Image";
-  img.style.maxWidth = "100%";
-
-  const text = document.createElement("div");
-  text.textContent = `Alphabet: ${letter}`;
-  text.style.marginTop = "10px";
-  text.style.fontWeight = "bold";
-
-  responseArea.appendChild(img);
-  responseArea.appendChild(text);
-}
+      const response = await fetch(apiURLAlpha + letter);
+      var data = await response.json();
+      openModal("http://localhost:8080" + data.imagePath, letter);
+    }
 
 
     function showNumbers() {
@@ -151,28 +149,11 @@
       }
     }
     async function sendNumber(num) {
-  const response = await fetch(apiURLNum + num);
-  var data = await response.json();
+      const response = await fetch(apiURLNum + num);
+      var data = await response.json();
+      openModal("http://localhost:8080" + data.imagePath, num);
 
-  console.log(data);
-
-  const imageURL = "http://localhost:8080";
-
-  responseArea.innerHTML = "";
-
-  const img = document.createElement("img");
-  img.src = imageURL + data.imagePath;
-  img.alt = "Sample Image";
-  img.style.maxWidth = "100%";
-
-  const text = document.createElement("div");
-  text.textContent = `Number: ${num}`;
-  text.style.marginTop = "10px";
-  text.style.fontWeight = "bold";
-
-  responseArea.appendChild(img);
-  responseArea.appendChild(text);
-}
+    }
 
 
     function showWords() {
@@ -190,36 +171,62 @@
     }
 
     async function sendWord(word) {
-  const response = await fetch(apiURLWord + word);
-  var data = await response.json();
+      const response = await fetch(apiURLWord + word);
+      var data = await response.json();
 
-  console.log(data);
+      console.log(data);
 
-  const videoURL = "http://localhost:8080";
+      const videoURL = "http://localhost:8080";
 
-  responseArea.innerHTML = "";
+      responseArea.innerHTML = "";
 
-  const video = document.createElement("video");
-  video.src = videoURL + data.videoPath;
-  video.alt = "Sample Video";
-  video.style.maxWidth = "30%";
-  video.controls = true;
+      const video = document.createElement("video");
+      video.src = videoURL + data.videoPath;
+      video.alt = "Sample Video";
+      video.style.maxWidth = "30%";
+      video.controls = true;
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
 
-  const text = document.createElement("div");
-  text.textContent = `Word: ${word}`;
-  text.style.marginTop = "10px";
-  text.style.fontWeight = "bold";
+      const text = document.createElement("div");
+      text.textContent = `Word: ${word}`;
+      text.style.marginTop = "10px";
+      text.style.fontWeight = "bold";
 
-  responseArea.appendChild(video);
-  responseArea.appendChild(text);
-}
+      responseArea.appendChild(video);
+      responseArea.appendChild(text);
+    }
+    // Modal Handling Functions
+    function openModal(imageSrc, text) {
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+      const modalText = document.getElementById("modalText");
+
+      modalImage.src = imageSrc;
+      modalText.textContent = `${text}`;
+      modal.style.display = "flex";
+
+    }
+
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";
+    }
+
+    // Close modal if clicked outside content
+    window.onclick = function (event) {
+      const modal = document.getElementById("imageModal");
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
 
 
-    
-    
+
 
     //showAlphabets();
 
   </script>
 </body>
+
 </html>
