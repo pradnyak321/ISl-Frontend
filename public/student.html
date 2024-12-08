@@ -62,14 +62,6 @@
     <div id="display-area" class="grid"></div>
   </main>
 
-  <!-- Modal Structure
-  <div id="imageModal" class="modal">
-    <div class="modal-content" style="width: 800px; height: 400px;">
-      
-      <span class="close" onclick="closeModal()">&times;</span>
-      <img id="modalImage" src="" alt="Image Display" style="width: 400px; height: 350px;">
-    </div>
-  </div> -->
   <!-- Modal Structure -->
   <div id="imageModal" class="modal">
     <div class="modal-content"
@@ -86,6 +78,14 @@
       <div id="modalText" style="flex-grow: 1; font-size: 300px; font-weight: bold; color: #333; text-align: left;">
       </div>
     </div>
+  </div>
+
+  <div id="wordTabs" class="tab-buttons">
+    <!-- Tabs will be dynamically generated -->
+  </div>
+
+  <div id="wordCards" class="card-container">
+    <!-- Words will be dynamically displayed here -->
   </div>
 
 
@@ -114,6 +114,8 @@
     function clearDisplay() {
       displayArea.innerHTML = "";
       responseArea.innerHTML = ""; // Clear the response area
+      wordTabs.innerHTML = "";
+      wordCards.innerHTML = "";      
     }
 
     function showAlphabets() {
@@ -156,19 +158,133 @@
     }
 
 
+    // function showWords() {
+    //   clearDisplay();
+    //   const words = ["Uncle", "Wash", "Water", "Week", "Welcome", "What", "When", "Where", "Who", "Why", "Work", "Year", "Yellow", "Absent", "Achieve", "After", "Alone", "Amount", "Animals", "Apple", "Aunty", "Baby", "Bad.", "Bag", "Bathroom", "Before", "Big", "Birds", "Black", "Blue", "Boy", "Brown", "Brush", "Cat", "Cereals", "Cheese", "Clean", "Clothes", "Coat", "Coffee", "Coins", "Cold", "Colours", "Comb", "Cookies", "Cost", "Cow", "Cry", "Cup", "Curd", "Day", "Divorced", "Dog",  "Dollers", "Drink", "Eggs", "Exerice", "Family", "Father", "Feelings", "Finish", "Food", "Fool", "Fork", "Good", "Grand father", "Grand mother", "Green", "Happy", "Health", "Hello", "Help", "Home", "Horse", "Hot", "How", "Hungry", "Less", "Like", "Love.", "Marriage", "Milk", "Money", "Month", "More", "Mother", "Night", "Paisa", "Pants", "Pizza", "Places", "Please", "Red", "Request", "Rupees", "Sad", "Seperated", "Sheep", "Shirt", "Shoes", "Socks", "Sorry", "Spoon", "Stop", "Tall", "Teeth", "Temperature", "Thank you", "Today"];
+
+    //   for (let i = 0; i < words.length; i++) {
+    //     const input = words[i];
+    //     const div = document.createElement("div");
+    //     div.className = "grid-item";
+    //     div.textContent = input;
+    //     div.onclick = () => sendWord(input);
+    //     displayArea.appendChild(div);
+    //   }
+    // }
+
+
+
+    //2nd try 
+
+    // function showWords() {
+    //   clearDisplay();
+    //   const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    //   // Create alphabet tabs
+    //   for (let i = 0; i < alphabets.length; i++) {
+    //     const letter = alphabets[i];
+    //     const tab = document.createElement("div");
+    //     tab.className = "grid-item";
+    //     tab.textContent = letter;
+    //     tab.onclick = () => filterWordsByAlphabet(letter);
+    //     displayArea.appendChild(tab);
+    //   }
+    // }
+
+    // // Function to filter words by selected alphabet
+    // function filterWordsByAlphabet(letter) {
+    //   clearDisplay();
+
+    //   const words = [
+    //     "Uncle", "Wash", "Water", "Week", "Welcome", "What", "When", "Where", "Who", "Why", "Work", "Year", "Yellow",
+    //     "Absent", "Achieve", "After", "Alone", "Amount", "Animals", "Apple", "Aunty", "Baby", "Bad", "Bag", "Bathroom",
+    //     "Before", "Big", "Birds", "Black", "Blue", "Boy", "Brown", "Brush", "Cat", "Cereals", "Cheese", "Clean",
+    //     "Clothes", "Coat", "Coffee", "Coins", "Cold", "Colours", "Comb", "Cookies", "Cost", "Cow", "Cry", "Cup", "Curd",
+    //     "Day", "Divorced", "Dog", "Dollars", "Drink", "Eggs", "Exercise", "Family", "Father", "Feelings", "Finish",
+    //     "Food", "Fool", "Fork", "Good", "Grandfather", "Grandmother", "Green", "Happy", "Health", "Hello", "Help", "Home",
+    //     "Horse", "Hot", "How", "Hungry", "Less", "Like", "Love", "Marriage", "Milk", "Money", "Month", "More", "Mother",
+    //     "Night", "Paisa", "Pants", "Pizza", "Places", "Please", "Red", "Request", "Rupees", "Sad", "Separated", "Sheep",
+    //     "Shirt", "Shoes", "Socks", "Sorry", "Spoon", "Stop", "Tall", "Teeth", "Temperature", "Thank you", "Today"
+    //   ];
+
+    //   // Filter words by the selected letter
+    //   const filteredWords = words.filter(word => word.startsWith(letter));
+
+    //   // Display filtered words
+    //   if (filteredWords.length > 0) {
+    //     filteredWords.forEach(word => {
+    //       const div = document.createElement("div");
+    //       div.className = "grid-item";
+    //       div.textContent = word;
+    //       div.onclick = () => sendWord(word);
+    //       displayArea.appendChild(div);
+    //     });
+    //   } else {
+    //     const noWordsMessage = document.createElement("div");
+    //     noWordsMessage.textContent = `No words found starting with "${letter}".`;
+    //     noWordsMessage.style.color = "red";
+    //     noWordsMessage.style.fontWeight = "bold";
+    //     noWordsMessage.style.textAlign = "center";
+    //     displayArea.appendChild(noWordsMessage);
+    //   }
+    // }
+
+    //3rd try 
     function showWords() {
       clearDisplay();
-      const words = ["Uncle", "wash", "water", "week", "Welcome", "What.", "when", "Where", "Who", "Why", "work", "year", "yellow", "Absent", "Achieve", "after", "Alone", "Amount", "Animals", "Apple", "Auanty", "baby", "Bad.", "Bag", "Bathroom", "before", "Big", "Birds", "Black", "blue", "Boy", "brown", "Brush", "cat", "cereals", "cheese", "clean", "clothes", "coat", "coffee", "coins", "cold", "Colours", "comb", "Cookies", "cost", "Cow", "Cry", "cup", "curd", "day", "Divorced", "dog", "dogs", "dollers", "Drink", "eggs", "Exerice", "Family", "Father", "feelings", "finish", "food", "Fool", "Fork", "Good.", "Grand father", "Grand mother", "green", "Happy", "Health", "Hello", "Help", "home", "Horse", "hot", "How", "Hungry", "Less", "like", "Love.", "marriage", "milk", "Money", "month", "More", "Mother", "night", "paisa", "pants", "pizza", "places", "Please", "red", "Request", "rupees", "Sad", "Seperated", "Sheep", "shirt", "shoes", "socks", "sorry", "Spoon", "Stop", "Tall", "Teeth", "Temperature", "Thank you", "today"];
 
-      for (let i = 0; i < words.length; i++) {
-        const input = words[i];
-        const div = document.createElement("div");
-        div.className = "grid-item";
-        div.textContent = input;
-        div.onclick = () => sendWord(input);
-        displayArea.appendChild(div);
-      }
+      // Group words by their starting letter
+      const words = ["Uncle", "Wash", "Water", "Week", "Welcome", "What", "When", "Where", "Who", "Why", "Work", "Year", "Yellow",
+        "Absent", "Achieve", "After", "Alone", "Amount", "Animals", "Apple", "Aunty", "Baby", "Bad", "Bag", "Bathroom",
+        "Before", "Big", "Birds", "Black", "Blue", "Boy", "Brown", "Brush", "Cat", "Cereals", "Cheese", "Clean",
+        "Clothes", "Coat", "Coffee", "Coins", "Cold", "Colours", "Comb", "Cookies", "Cost", "Cow", "Cry", "Cup", "Curd",
+        "Day", "Divorced", "Dog", "Dollars", "Drink", "Eggs", "Exercise", "Family", "Father", "Feelings", "Finish",
+        "Food", "Fool", "Fork", "Good", "Grandfather", "Grandmother", "Green", "Happy", "Health", "Hello", "Help", "Home",
+        "Horse", "Hot", "How", "Hungry", "Less", "Like", "Love", "Marriage", "Milk", "Money", "Month", "More", "Mother",
+        "Night", "Paisa", "Pants", "Pizza", "Places", "Please", "Red", "Request", "Rupees", "Sad", "Separated", "Sheep",
+        "Shirt", "Shoes", "Socks", "Sorry", "Spoon", "Stop", "Tall", "Teeth", "Temperature", "Thank you", "Today"];
+      const groupedWords = words.reduce((acc, word) => {
+        const firstLetter = word[0].toUpperCase();
+        if (!acc[firstLetter]) acc[firstLetter] = [];
+        acc[firstLetter].push(word);
+        return acc;
+      }, {});
+
+      // Generate tabs
+      const tabsContainer = document.getElementById("wordTabs");
+      tabsContainer.innerHTML = ""; // Clear previous tabs
+      Object.keys(groupedWords).sort().forEach(letter => {
+        const button = document.createElement("button");
+        button.textContent = letter;
+        button.onclick = () => displayWords(groupedWords[letter]);
+        tabsContainer.appendChild(button);
+      });
+
+      // Display words for the first tab
+      displayWords(groupedWords[Object.keys(groupedWords).sort()[0]]);
     }
+
+    function displayWords(words) {
+      const cardsContainer = document.getElementById("wordCards");
+      cardsContainer.innerHTML = ""; // Clear previous cards
+
+      words.forEach(word => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const wordText = document.createElement("div");
+        wordText.textContent = word;
+
+        const button = document.createElement("button");
+        button.textContent = "Play Video";
+        button.onclick = () => sendWord(word);
+
+        card.appendChild(wordText);
+        card.appendChild(button);
+        cardsContainer.appendChild(card);
+      });
+    }
+
 
     async function sendWord(word) {
       const response = await fetch(apiURLWord + word);
