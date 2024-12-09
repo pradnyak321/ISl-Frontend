@@ -16,7 +16,6 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/student.css" rel="stylesheet">
 
-  
 </head>
 
 <body class="course-details-page">
@@ -30,7 +29,7 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="menu.html" class="active">Menu</a></li>
-          <li><a href="assessment.html">Assessment</a></li>
+          <li><a href="assessment.html">Assessment</a></li> <!-- Added Assessment Link -->
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -66,13 +65,12 @@
   <script src="assets/js/main.js"></script>
 
   <script>
+    const displayArea = document.getElementById("display-area");
+    const responseArea = document.getElementById("response");
 
-    const displayArea=document.getElementById("display-area");
-    const responseArea=document.getElementById("response");
-
-    const apiURLAlpha="http://localhost:8080/api/signs/alphabet/";
-    const apiURLNum="http://localhost:8080/api/signs/number/";
-    const apiURLWord="http://localhost:8080/api/signs/words/";
+    const apiURLAlpha = "http://localhost:8081/api/signs/alphabet/";
+    const apiURLNum = "http://localhost:8081/api/signs/number/";
+    const apiURLWord = "http://localhost:8081/api/signs/words/";
 
     function clearDisplay() {
       displayArea.innerHTML = "";
@@ -91,18 +89,18 @@
       }
     }
 
-    async function sendAlphabet(letter){
-      const response= await fetch(apiURLAlpha+letter);
-      var data=await response.json();
+    async function sendAlphabet(letter) {
+      const response = await fetch(apiURLAlpha + letter);
+      var data = await response.json();
       
       console.log(data);
       
-      const imageURL="http://localhost:8080";
+      const imageURL = "http://localhost:8081";
       
-      responseArea.innerHTML="";
+      responseArea.innerHTML = "";
       
-      const img=document.createElement("img");
-      img.src=imageURL+data.imagePath;
+      const img = document.createElement("img");
+      img.src = imageURL + data.imagePath;
       img.alt = "Sample Image";
       img.style.maxWidth = "100%";
       responseArea.appendChild(img);
@@ -120,18 +118,19 @@
         displayArea.appendChild(div);
       }
     }
-    async function sendNumber(num){
-      const response= await fetch(apiURLNum+num);
-      var data=await response.json();
+
+    async function sendNumber(num) {
+      const response = await fetch(apiURLNum + num);
+      var data = await response.json();
       
       console.log(data);
       
-      const imageURL="http://localhost:8080";
+      const imageURL = "http://localhost:8081";
       
-      responseArea.innerHTML="";
+      responseArea.innerHTML = "";
       
-      const img=document.createElement("img");
-      img.src=imageURL+data.imagePath;
+      const img = document.createElement("img");
+      img.src = imageURL + data.imagePath;
       img.alt = "Sample Image";
       img.style.maxWidth = "100%";
       responseArea.appendChild(img);
@@ -151,30 +150,23 @@
       }
     }
 
-    async function sendWord(word){
-      const response= await fetch(apiURLWord+word);
-      var data=await response.json();
+    async function sendWord(word) {
+      const response = await fetch(apiURLWord + word);
+      var data = await response.json();
       
       console.log(data);
       
-      const videoURL="http://localhost:8080";
+      const videoURL = "http://localhost:8081";
       
-      responseArea.innerHTML="";
+      responseArea.innerHTML = "";
       
-      const video=document.createElement("video")
-      video.src=videoURL+data.videoPath;
-      video.alt="Sample Video"
-      video.style.maxWidth="30%";
+      const video = document.createElement("video");
+      video.src = videoURL + data.videoPath;
+      video.alt = "Sample Video";
+      video.style.maxWidth = "30%";
       video.controls = true;
       responseArea.appendChild(video);
     }
-
-
-    
-    
-
-    //showAlphabets();
-
   </script>
 </body>
 </html>
