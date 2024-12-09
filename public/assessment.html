@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #6e7cbb, #344a77);
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .login-container:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 2px solid #e3e6f3;
+      padding: 12px;
+      font-size: 1rem;
+      box-shadow: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: #344a77;
+      box-shadow: 0 0 5px rgba(52, 74, 119, 0.3);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      background-color: #344a77;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+      background-color: #1f2d4d;
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(2px);
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+
+    .text-success {
+      color: #28a745;
+    }
+
+    .text-danger {
+      color: #dc3545;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="logo">
+      ISL Mate
+    </div>
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" class="form-control" placeholder="Enter your first name" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" class="form-control" placeholder="Enter your last name" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Start with Assessment</button>
+    </form>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    function handleLogin(event) {
+      event.preventDefault(); // Prevent page refresh
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+
+      if (firstName && lastName) {
+        document.getElementById("message").innerHTML = '<p class="text-success">Redirecting to assessment...</p>';
+        setTimeout(() => {
+          window.location.href = "assessment-questions.html"; // Redirects to the assessment page
+        }, 1000);
+      } else {
+        document.getElementById("message").innerHTML = '<p class="text-danger">Please fill in all fields.</p>';
+      }
+    }
+  </script>
+
+</body>
+</html>
