@@ -28,15 +28,29 @@
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="menu.html" class="active">Menu</a></li>
-          <li><a href="assessment.html">Assessment</a></li>
+          <li><a href="index.html?lang=mr">Home</a></li>
+          <li><a href="about.html?lang=mr">About</a></li>
+          <li><a href="menu.html?lang=mr" class="active">Menu</a></li>
+          <li><a href="assessment.html?lang=mr">Assessment</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
   </header>
+
+  <!-- Google Translate Widget -->
+  <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: #f9f9f9; border: 1px solid #ddd; padding: 5px; border-radius: 5px;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'mr,en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
   <main class="main">
     <div class="page-title" data-aos="fade">
@@ -52,6 +66,7 @@
     </div>
 
     <div class="center-buttons">
+      <!--<button onclick="showAlphabets()" class="notranslate">Alphabets</button> -->
       <button onclick="showAlphabets()">Alphabets</button>
       <button onclick="showNumbers()">Numbers</button>
       <button onclick="showWords()">Words</button>
@@ -101,6 +116,7 @@
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/language.js"></script>
 
   <script>
 
@@ -126,6 +142,7 @@
         const div = document.createElement("div");
         div.className = "grid-item";
         div.textContent = letter;
+        div.setAttribute("lang", "en"); // Add lang="en" to prevent translation
         div.onclick = () => sendAlphabet(letter);
         displayArea.appendChild(div);
       }
@@ -287,31 +304,61 @@
 
 
     async function sendWord(word) {
+      // Fetch the word details (video and image paths) from the API
       const response = await fetch(apiURLWord + word);
       var data = await response.json();
 
       console.log(data);
+ 
+      const videoURL = "http://localhost:8080" + data.videoPath; // Full video URL
+      const imageURL = "http://localhost:8080" + data.imagePath; // Full image URL
 
-      const videoURL = "http://localhost:8080";
-
+      // Clear the response area
       responseArea.innerHTML = "";
 
+      // Create a container for the layout
+      const container = document.createElement("div");
+      container.style.display = "flex";
+
+      // Add a class to the container for styling
+      container.className = "center-container";
+      
+      container.style.justifyContent="center";
+      container.style.alignItems = "center";
+      container.style.gap = "20px"; // Add spacing between elements
+
+      // Word Box (Left)
+      const wordBox = document.createElement("div");
+      wordBox.className = "word-display"; // Only use CSS for styling
+      wordBox.textContent = word; // Set the word text
+
+      // Video (Center)
       const video = document.createElement("video");
-      video.src = videoURL + data.videoPath;
+      video.src = videoURL;
       video.alt = "Sample Video";
-      video.style.maxWidth = "30%";
+      video.style.width = "30%"; // 30% of container width
+      video.style.height = "200px"; // Fixed height
       video.controls = true;
       video.autoplay = true;
       video.muted = true;
       video.loop = true;
 
-      const text = document.createElement("div");
-      text.textContent = `Word: ${word}`;
-      text.style.marginTop = "10px";
-      text.style.fontWeight = "bold";
+      // Image (Right)
+      const image = document.createElement("img");
+      image.src = imageURL;
+      image.alt = `Image for ${word}`;
+      image.style.width = "30%"; // Same width as video
+      image.style.height = "200px"; // Same height as video
+      image.style.objectFit = "contain"; // Maintain aspect ratio
 
-      responseArea.appendChild(video);
-      responseArea.appendChild(text);
+      // Append elements to the container
+      container.appendChild(wordBox);
+      container.appendChild(video);
+      container.appendChild(image);
+
+      // Append the container to the response area
+      responseArea.appendChild(container);
+
     }
     // Modal Handling Functions
     function openModal(imageSrc, text) {
@@ -336,9 +383,6 @@
         closeModal();
       }
     }
-
-
-
 
     //showAlphabets();
 

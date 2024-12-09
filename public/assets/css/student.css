@@ -43,6 +43,7 @@
       transition: transform 0.3s ease, background-color 0.3s ease;
       cursor: pointer;
       font-size: 16px;
+
     }
 
 
@@ -63,8 +64,25 @@
       }
     }
 
+    @media (max-width: 576px) {
+      .word-display,
+  .image-display {
+    max-width: 90%; /* Reduce width on smaller screens */
+  }
+    }
+
     .hidden {
       display: none;
+    }
+
+    .center-container {
+      display: flex;
+      justify-content: center; /* Centers items horizontally */
+      align-items: center; /* Centers items vertically */
+      gap: 20px; /* Spacing between word, video, and image */
+      width: 100%; /* Full width to center properly */
+      margin: 0 auto; /* Centers the container itself */
+      text-align: center; /* Align text in the container */
     }
 
     .image-display {
@@ -204,4 +222,30 @@
 
 .card button:hover {
   background-color: #0056b3;
+}
+
+
+
+.image-display {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  max-width: 80%; /* Restrict width for consistent alignment */
+  justify-content: center;  /* Centers the content horizontally */
+  align-items: center;      /* Centers the content vertically if the container height is fixed */
+}
+
+.word-display {
+  margin-top: 20px;
+  text-align: left;
+  padding: 10px; /* Optional: Adds padding to the word display box */
+  border: 2px solid #007bff; /* Blue border (same as image) */
+  border-radius: 10px; /* Rounded corners (same as image) */
+  background-color: white; /* Optional: You can add a background color if needed */
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  justify-content: center;  /* Centers the content horizontally */
+  align-items: center;      /* Centers the content vertically if the container height is fixed */
 }
