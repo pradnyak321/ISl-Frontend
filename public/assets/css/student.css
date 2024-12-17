@@ -249,3 +249,8 @@
   justify-content: center;  /* Centers the content horizontally */
   align-items: center;      /* Centers the content vertically if the container height is fixed */
 }
+
+.navmenu ul li a.active {
+  font-weight: bold;
+  color: #007bff; /* Highlight color */
+}
